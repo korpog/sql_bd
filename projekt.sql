@@ -7,17 +7,18 @@ CREATE TABLE users (
     name VARCHAR(50) NOT NULL,
     surname VARCHAR(50) NOT NULL,
     username VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
     email VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users(name, surname, username, email)
+INSERT INTO users(name, surname, username, age, email)
 VALUES 
-('Laura', 'Palmer', 'muffin', 'lp@tp.net'),
-('Dale', 'Cooper', 'coop', 'dc@tp.net'),
-('Bobby', 'Briggs', 'bobby', 'bb@tp.net'),
-('Shelly', 'Johnson', 'cherrypie', 'sj@tp.net'),
-('Leland', 'Palmer', 'bob', 'bob@tp.net');
+('Laura', 'Palmer', 'muffin', 17, 'lp@tp.net'),
+('Dale', 'Cooper', 'coop', 35, 'dc@tp.net'),
+('Bobby', 'Briggs', 'bobby', 19, 'bb@tp.net'),
+('Shelly', 'Johnson', 'cherrypie', 19, 'sj@tp.net'),
+('Leland', 'Palmer', 'bob', 45, 'bob@tp.net');
 
 CREATE INDEX idx_name_surname
 ON users (name, surname);
@@ -67,7 +68,7 @@ CREATE TABLE likes (
 );
 
 INSERT INTO likes(user_id, post_id)
-VALUES (1, 3), (1,2), (5,5), (2,4),;
+VALUES (1, 3), (1,2), (5,5), (5,1), (2,4), (4,2);
 
 CREATE TABLE follows (
     following_user_id INT,
@@ -93,5 +94,11 @@ ORDER BY LENGTH(name) DESC;
 
 SELECT title from posts
 WHERE title LIKE 'D%';
+
+SELECT SUM(age) from users;
+
+SELECT name, surname FROM users
+WHERE age BETWEEN 20 AND 40;
+
 
 
