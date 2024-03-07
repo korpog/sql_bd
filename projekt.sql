@@ -80,7 +80,6 @@ VALUES
 
 
 CREATE TABLE likes (
-    like_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     post_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -89,7 +88,7 @@ CREATE TABLE likes (
 );
 
 INSERT INTO likes(user_id, post_id)
-VALUES (1,3), (1,2), (5,5), (5,1), (2,4), (4,2), (7,10), (4,6), (7,1), (1,9);
+VALUES (1,3), (1,2), (5,5), (5,1), (2,4), (4,2), (7,10), (7,1), (1,9), (4,10);
 
 CREATE TABLE follows (
     following_user_id INT,
