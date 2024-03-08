@@ -80,6 +80,7 @@ VALUES
 
 
 CREATE TABLE likes (
+    like_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     post_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -141,15 +142,12 @@ AND c.post_id = p.post_id;
 SELECT p.post_id, p.title, c.comment_id 
 FROM posts p
 LEFT JOIN comments c ON p.post_id = c.post_id
-LEFT JOIN users u ON u.user_id = c.user_id;
+LEFT JOIN users u ON u.user_id = c.user_id
 WHERE c.comment_id IS NULL;
 
 SELECT p.post_id, p.title, u.username
 FROM posts p
 RIGHT JOIN likes l ON p.post_id = l.post_id
-RIGHT JOIN users u ON u.user_id = l.user_id;
-ORDER BY created_at DESC;
-
-
-
-
+RIGHT JOIN users u ON u.user_id = l.user_id
+WHERE p.post_id IS NOT NULL
+ORDER BY l.created_at DESC;
