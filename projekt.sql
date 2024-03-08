@@ -130,7 +130,25 @@ INNER JOIN users AS u ON u.user_id = p.user_id
 GROUP BY l.post_id
 ORDER BY num_of_likes DESC;
 
+SELECT * from users
+NATURAL JOIN posts
+NATURAL JOIN likes;
 
+SELECT u.username, p.title, c.body from users u, posts p, comments c
+WHERE p.user_id = u.user_id
+AND c.post_id = p.post_id;
+
+SELECT p.post_id, p.title, c.comment_id 
+FROM posts p
+LEFT JOIN comments c ON p.post_id = c.post_id
+LEFT JOIN users u ON u.user_id = c.user_id;
+WHERE c.comment_id IS NULL;
+
+SELECT p.post_id, p.title, u.username
+FROM posts p
+RIGHT JOIN likes l ON p.post_id = l.post_id
+RIGHT JOIN users u ON u.user_id = l.user_id;
+ORDER BY created_at DESC;
 
 
 
