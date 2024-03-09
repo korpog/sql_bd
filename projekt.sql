@@ -151,3 +151,22 @@ RIGHT JOIN likes l ON p.post_id = l.post_id
 RIGHT JOIN users u ON u.user_id = l.user_id
 WHERE p.post_id IS NOT NULL
 ORDER BY l.created_at DESC;
+
+delimiter //
+
+CREATE PROCEDURE select_post_by_id (IN p_id int)
+BEGIN
+    SELECT post_id, title, body FROM posts
+    WHERE post_id = p_id;
+END//
+
+CREATE PROCEDURE select_comments_with_word (IN word VARCHAR(50))
+BEGIN
+    SELECT comment_id, body FROM comments
+    WHERE body LIKE CONCAT('%', word,'%');
+END//
+delimiter ;
+
+
+CALL select_post_by_id(1);
+CALL select_comments_with_word("dead");
