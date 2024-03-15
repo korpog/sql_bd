@@ -28,6 +28,9 @@ VALUES
 CREATE INDEX idx_name_surname
 ON users (name, surname);
 
+CREATE INDEX idx_username
+ON users (username);
+
 CREATE TABLE posts (
     post_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -125,9 +128,9 @@ ORDER BY NAME;
 
 
 SELECT p.post_id, p.title, u.username, COUNT(*) AS num_of_likes 
-FROM posts AS p
-INNER JOIN likes AS l ON p.post_id = l.post_id
-INNER JOIN users AS u ON u.user_id = p.user_id
+FROM posts p
+INNER JOIN likes l ON p.post_id = l.post_id
+INNER JOIN users u ON u.user_id = p.user_id
 GROUP BY l.post_id
 ORDER BY num_of_likes DESC;
 
@@ -165,8 +168,20 @@ BEGIN
     SELECT comment_id, body FROM comments
     WHERE body LIKE CONCAT('%', word,'%');
 END//
+
+CREATE TRIGGER age_check_trigger 
+BEFORE INSERT ON users 
+FOR EACH ROW
+BEGIN
+    IF NEW.age < 0
+    THEN SET NEW.age = 0;
+    END IF;
+END//
+
 delimiter ;
 
 
 CALL select_post_by_id(1);
 CALL select_comments_with_word("dead");
+
+
